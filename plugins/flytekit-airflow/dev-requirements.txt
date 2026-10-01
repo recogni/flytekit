@@ -580,9 +580,7 @@ idna==3.10
 immutabledict==4.2.0
     # via apache-airflow-providers-google
 importlib-metadata==8.6.1
-    # via
-    #   apache-airflow
-    #   flask
+    # via apache-airflow
 importlib-resources==6.4.5
     # via limits
 inflection==0.5.1
@@ -674,7 +672,7 @@ numpy==1.26.4
     #   shapely
 oauth2client==4.1.3
     # via google-apitools
-oauthlib==3.2.2
+oauthlib==4.0.0
     # via requests-oauthlib
 objsize==0.7.0
     # via apache-beam
@@ -1069,8 +1067,6 @@ wtforms==3.1.2
 yarl==1.14.0
     # via aiohttp
 zipp==3.21.0
-    # via
-    #   importlib-metadata
-    #   importlib-resources
+    # via importlib-metadata
 zstandard==0.23.0
     # via apache-beam
