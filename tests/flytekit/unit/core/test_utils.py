@@ -1,3 +1,5 @@
+import functools
+import typing
 from collections import OrderedDict
 
 import pytest
@@ -105,6 +107,27 @@ def test_class_decorator():
 
     ts = get_serializable_task(OrderedDict(), ss, t)
     assert ts.template.config == {"foo": "baz"}
+
+
+def test_class_decorator_keeps_assigned_annotations():
+    class my_decorator(ClassDecorator):
+        def execute(self, *args, **kwargs):
+            return self.task_function(*args, **kwargs)
+
+        def get_extra_config(self):
+            return {}
+
+    def f(a: int) -> str:
+        return str(a)
+
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        return f(*args, **kwargs)
+
+    wrapper.__annotations__ = {**wrapper.__annotations__, "b": typing.Optional[str]}
+
+    decorated = my_decorator(wrapper)
+    assert typing.get_type_hints(decorated) == {"a": int, "b": typing.Optional[str], "return": str}
 
 
 def test_str_2_bool():

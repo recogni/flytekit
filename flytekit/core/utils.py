@@ -7,7 +7,7 @@ import tempfile
 import time
 import typing
 from abc import ABC, abstractmethod
-from functools import wraps
+from functools import WRAPPER_ASSIGNMENTS, wraps
 from hashlib import sha224 as _sha224
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Optional, cast
@@ -359,7 +359,9 @@ class ClassDecorator(ABC):
         self.decorator_kwargs = kwargs
         if task_function:
             # wraps preserve the function metadata, including type annotations, from the original function to the decorator.
-            wraps(task_function)(self)
+            # Python 3.14 removed __annotations__ from WRAPPER_ASSIGNMENTS. Without it, get_type_hints() on this
+            # instance fails when the wrapped function has assigned __annotations__ and thus has no __annotate__.
+            wraps(task_function, assigned=(*WRAPPER_ASSIGNMENTS, "__annotations__"))(self)
 
     def __call__(self, *args, **kwargs):
         if self.task_function:
