@@ -16,7 +16,7 @@ filelock==3.13.1
     #   triton
 flatbuffers==23.5.26
     # via onnxruntime
-fsspec==2023.10.0
+fsspec==2026.6.0
     # via torch
 humanfriendly==10.0
     # via coloredlogs
